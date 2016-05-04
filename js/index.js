@@ -391,7 +391,7 @@ var floor1=$(".floor1",floor);
 var floor1Zi=$(".floor1-zi",floor);
 //console.log(floor1Zi);
 var floorTu=$(".floor-tu",floor);
-console.log(floorTu);
+// console.log(floorTu);
 
 //给 楼层 每楼添加鼠标事件
 /*for (var i = 0; i < floor1Lis.length;i++) {
@@ -411,23 +411,33 @@ console.log(floorTu);
   } 
 }*/
   //返回顶部
-  var back=$(".back")[0];
-  //console.log(back);
+  var back=$(".fx-fankui-tu")[0];
+  console.log(back);
   var top=[];
   var floors=$(".floor1-top");
   //console.log(floors)
   for (var i = 0; i < floors.length; i++) {
      top.push(floors[i].offsetTop);
   };
-  console.log(top)
+  // console.log(top)
   back.onclick=function(){
+    // alert(1);
     var st=document.body.scrollTop?document.body:document.documentElement;
      animate(st,{scrollTop:0});
-  }
+
+  };
+  //懒加载
+var windowH=document.documentElement.clientHeight;
+var anxu=$(".anxu");
+//console.log(anxu.length)
+var tops=[];
+for (var i = 0; i < anxu.length; i++) {
+  tops.push(anxu[i].offsetTop);
+};
  //给每个楼层  添加点击跳转到对应楼层  
  window.onscroll=function(){
   var st1=document.body.scrollTop?document.body.scrollTop:document.documentElement.scrollTop;
-   //console.log(st1);
+   console.log(st1);
    for (var i = 0; i < top.length; i++) {
       if(st1+450>top[i]){
           for(var j=0;j<floor1Lis.length;j++){
@@ -455,7 +465,20 @@ console.log(floorTu);
       animate(st3,{scrollTop:top[this.index3]})
     }
    };
+
+    scrolls=document.body.scrollTop||document.documentElement.scrollTop;
+   // console.log(scrolls)
+   for (var i = 0; i < tops.length; i++) {
+       if(tops[i]<=scrolls+windowH){
+        tupian=$("img",anxu[i]);
+        //console.log(tupian)
+        for (var j = 0; j < tupian.length; j++) {
+          tupian[j].src=tupian[j].getAttribute("asrc");
+        };
+       };
+   };
  }
+ window.onscroll();
 //顶部  下拉框
 var listDown=$(".list-down");
 for (var i = 0; i < listDown.length; i++) {
@@ -475,30 +498,10 @@ datuClose2.onclick=function(){
   datuOut.style.display="none"
 };
 
-//懒加载
-var windowH=document.documentElement.clientHeight;
-var anxu=$(".anxu");
-//console.log(anxu.length)
-var tops=[];
-for (var i = 0; i < anxu.length; i++) {
-  tops.push(anxu[i].offsetTop);
-};
+
 // console.log(tops)
 
-window.onscroll=function(){
-    scrolls=document.body.scrollTop||document.documentElement.scrollTop;
-   // console.log(scrolls)
-   for (var i = 0; i < tops.length; i++) {
-       if(tops[i]<=scrolls+windowH){
-        tupian=$("img",anxu[i]);
-        //console.log(tupian)
-        for (var j = 0; j < tupian.length; j++) {
-          tupian[j].src=tupian[j].getAttribute("asrc");
-        };
-       };
-   };
-};
-window.onscroll();
+
 
 
   
